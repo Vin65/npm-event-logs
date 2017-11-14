@@ -22,7 +22,14 @@ describe('EventLog', () => {
     context('without environment variables', () => {
       it('should throw error', (done) => {
         let eventLogFactory = chai.create('EventLog');
-        let eventLog = new EventLog(eventLogFactory.websiteID, eventLogFactory.event, eventLogFactory.modifiedBy, eventLogFactory.metaData);
+        let eventLog = new EventLog(
+          eventLogFactory.websiteID,
+          eventLogFactory.eventObject,
+          eventLogFactory.eventObjectID,
+          eventLogFactory.event,
+          eventLogFactory.modifiedBy,
+          eventLogFactory.metaData
+        );
         
         expect(() => {
           eventLog.create(true);

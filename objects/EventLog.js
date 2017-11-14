@@ -3,20 +3,21 @@
 const httpRequest = require('request');
 
 class EventLog {
-  constructor(websiteID, event, modifiedBy, metaData) {
+  constructor(websiteID, eventObject, eventObjectID, event, modifiedBy, metaData) {
     this.websiteID          = websiteID;
-    this.event              = event; // method name(version)
-    this.modifiedBy         = modifiedBy; // WebserviceAccountID
+    this.eventObject        = eventObject; // e.g. Table Name (ordersXLoyaltyPoints)
+    this.eventObjectID      = eventObjectID; // primary key for eventObject
+    this.event              = event; // e.g. create, update
+    this.modifiedBy         = modifiedBy; // e.g. Webhooks application UUID
     this.metaData           = metaData;
     
     this.associatedObjectID = null;
     this.createdAt          = null; // transmission date => now()
-    this.eventObjectID      = '-'; // TODO: remove restriction to have this required
   }
   
   static _headers() {
     return {
-      'Content-Type':   'application/json', // not related to JsonRequest.contentType()
+      'Content-Type':   'application/json',
       Authorization:    process.env.EVENT_LOGS_TOKEN
     };
   }
@@ -24,7 +25,7 @@ class EventLog {
   _body() {
     return {
       websiteID:      this.websiteID,
-      eventObject:    'webservices',
+      eventObject:    this.eventObject,
       eventObjectID:  this.eventObjectID,
       event:          this.event,
       modifiedBy:     this.modifiedBy,

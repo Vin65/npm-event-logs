@@ -10,7 +10,11 @@ chai.use(factories);
 
 chai.factory('EventLog', {
   websiteID: uuid(),
-  event: `methodName(v200)`,
+  eventObject: 'tests',
+  eventObjectID: '-',
+  event: `create`,
   modifiedBy: uuid(),
-  metaData: {}
+  metaData: {
+    meta: 'data'
+  }
 });
