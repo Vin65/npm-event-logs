@@ -5,7 +5,7 @@ const httpRequest = require('request');
 class EventLog {
   constructor(websiteID, eventObject, eventObjectID, event, modifiedBy, metaData) {
     this.websiteID          = websiteID;
-    this.eventObject        = eventObject; // e.g. Table Name (ordersXLoyaltyPoints)
+    this.eventObject        = eventObject; // e.g. Table Name
     this.eventObjectID      = eventObjectID; // primary key for eventObject
     this.event              = event; // e.g. create, update
     this.modifiedBy         = modifiedBy; // e.g. Webhooks application UUID
