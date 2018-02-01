@@ -1,5 +1,5 @@
 # Installation
-* `npm install --save git+ssh://git@github.com/Vin65/npm-event-logs.git#master`
+* `npm install --save npm-event-logs`
 
 * Ensure the following environment variables are added to your secrets:
   * `EVENT_LOGS_URL`
