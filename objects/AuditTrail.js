@@ -15,9 +15,7 @@ class AuditTrail {
   }
   
   _body() {
-    return {
-      data: this.data
-    };
+    return this.data;
   }
   
   create(shouldPost) {
