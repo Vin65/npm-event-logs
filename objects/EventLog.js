@@ -57,7 +57,7 @@ class EventLog {
     } else {
       return new Promise(function(resolve, reject) {
         console.info('Logging EventLog:');
-        console.dir(this._body());
+        console.dir(options);
         resolve(true);
       });
     }
