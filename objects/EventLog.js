@@ -1,6 +1,6 @@
 'use strict';
 
-const httpRequest = require('request');
+const httpRequest = require('request-promise');
 
 class EventLog {
   constructor(websiteID, eventObject, eventObjectID, event, modifiedBy, metaData) {
@@ -33,22 +33,33 @@ class EventLog {
     };
   }
   
-  create(shouldPost) {
+  async create(shouldPost) {
     let options = {
-        url:      `${process.env.EVENT_LOGS_URL}event-log`,
+        method:   'POST',
+        uri:      `${process.env.EVENT_LOGS_URL}event-log`,
         headers:  this.constructor._headers(),
-        body:     JSON.stringify(this._body())
+        json:     true,
+        body:     this._body()
     };
+
     if (shouldPost) {
-      httpRequest.post(options, (error, response, body) => {
-        // process returned response
-        if (error) throw new Error(error);
-      }).on('error', (error) => {
-        console.error(error);
+      return new Promise(function(resolve, reject) {
+        httpRequest(options, function(error, data) {
+          if (error) {
+            console.log(`ERROR: Failed to POST to Event Logs: '${JSON.stringify(options)}'`);
+            console.log(error);
+            reject(error);
+          } else {
+            resolve(data);
+          }
+        });
       });
     } else {
-      console.info('Logging EventLog:');
-      console.dir(this._body());
+      return new Promise(function(resolve, reject) {
+        console.info('Logging EventLog:');
+        console.dir(this._body());
+        resolve(true);
+      });
     }
   }
 }
