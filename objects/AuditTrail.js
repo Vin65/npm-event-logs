@@ -42,7 +42,7 @@ class AuditTrail {
     } else {
       return new Promise(function(resolve, reject) {
         console.info('Logging AuditTrail:');
-        console.dir(this._body());
+        console.dir(options);
         resolve(true);
       });
     }
