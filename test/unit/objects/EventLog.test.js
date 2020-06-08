@@ -20,7 +20,7 @@ describe('EventLog', () => {
   
   describe('#create', () => {
     context('without environment variables', () => {
-      it('should throw error', (done) => {
+      it('should throw error', async () => {
         let eventLogFactory = chai.create('EventLog');
         let eventLog = new EventLog(
           eventLogFactory.websiteID,
@@ -31,10 +31,12 @@ describe('EventLog', () => {
           eventLogFactory.metaData
         );
         
-        expect(() => {
-          eventLog.create(true);
-        }).to.throw('Error: Invalid URI "undefinedevent-log"');
-        done();
+        try {
+          await eventLog.create(true);
+        } catch (error) {
+          expect(error).to.be.an.instanceof(Error);
+          expect(error.message).to.include('Invalid URI "undefinedevent-log"');
+        }
       });
     });
   });
